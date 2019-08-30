@@ -1,0 +1,114 @@
+import requests
+import time  													#Time.sleep lets us not break Virus Total's rule of 4 requests/minute
+import operator 												#Sorts Dictionary by Value
+
+url = 'https://www.virustotal.com/vtapi/v2/file/report'								#This is Virus Total's API
+
+params = {'apikey': '5495d7c47aafe9491e06136a47dc2dad29db87423ad5222b2e07760c4ba14aa4', 'resource': ''}			
+
+
+def McAfee(errorDetails):											#Returns true if McAfee output's a result that isn't None
+  try:
+    "McAfee Result: "+ errorDetails["McAfee"]["result"]
+    return True
+  except TypeError:
+    return False
+
+def Paloalto(errorDetails):
+  try:
+    "PaloAlto Result: " + errorDetails["Paloalto"]["result"]
+    return True
+  except TypeError:
+    return False
+
+
+count = {'key':0}												#Create a dictionary that will store all the Vendor's and the number of hits they have
+string_test = ''
+with open("hashes.txt") as f:											#Open the file with hashes and read it
+  lineList = f.readlines()						
+
+for i in lineList:												#Find the vendors other than McAfee and Paloalot that are most accurate if they both have no results
+  params['resource'] = i											
+  response = requests.get(url, params=params)									#Rresponse from API
+  errorDetails = response.json()["scans"]
+			
+  #print("HASH: "+i)
+
+  for i in errorDetails:											#Keep track of how many hits each Vendor gets
+    try:
+      string_test = errorDetails[i]["result"]			
+      count[i] = count.get(i, 0)+1
+    except TypeError:
+      string_test = ''
+
+  #print("\n")
+
+  time.sleep(16) 					
+
+sorted_d = sorted(count.items(), key=operator.itemgetter(1))							#Sorts the dict of vendors by decreasing number of hits
+counter = -1;				
+checked = 0;
+result = False;
+
+#for i in sorted_d:
+#  print(i)
+
+for i in lineList:
+  params['resource'] = i		
+  response = requests.get(url, params=params)
+  errorDetails = response.json()["scans"]
+
+
+  #errorDetails = response.json()["scans"]
+  #errorDetails["McAfee"]["result"] = None;
+  #errorDetails["Qihoo-360"]["result"] = None;
+  #errorDetails["CrowdStrike"]["result"] = None;
+  #errorDetails["Paloalto"]["result"] = None;
+  #errorDetails["Cybereason"]["result"] = None;
+  #for j in errorDetails:
+  #  errorDetails[j]["result"] = None
+  
+  print("HASH: "+i.strip("\n"))											#Prints the Hash neatly by stripping the "\n" in the file strings
+
+
+
+  if(McAfee(errorDetails) is True):									
+    print("McAfee Result: "+errorDetails["McAfee"]["result"])
+    checked += 1;
+  else:														
+    print("McAfee No Results")
+  
+  if(Paloalto(errorDetails) is True):
+    print("PaloAlto Result: "+errorDetails["Paloalto"]["result"])
+    checked += 1;
+  else:
+    print("PaloAlto No Results")
+
+
+
+  if(checked != 2):												#At least one didnt hit (McAfee/Paloalto)
+    while (sorted_d[counter][0] != 'key'):
+      main_string = sorted_d[counter][0]
+      try:
+        print(main_string+" Result: "+errorDetails[main_string]["result"])
+        result = True
+        break;													#We don't need to continue. It's the first result that we printed
+      except TypeError:
+        print(main_string + " Result: None")
+        counter -= 1;
+    
+    if(not result):												#We went through every vendor and no hits
+      print("No Results")
+      result = False
+
+  checked = 0;													#Reset our trackers for the next hash iteration
+  counter = -1;
+  print("\n")
+  time.sleep(16) 
+
+
+  #try:
+  #  print("PaloAlto Result: "+errorDetails["Paloalto"]["result"])
+  #except TypeError:
+  #  print("PaloAlto Result: None")
+  #  print(max_value[0]+" Result: "+ errorDetails[max_value[0]]["result"])

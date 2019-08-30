@@ -1,0 +1,72 @@
+import requests
+import time
+import operator
+
+url = 'https://www.virustotal.com/vtapi/v2/file/report'
+
+params = {'apikey': '5495d7c47aafe9491e06136a47dc2dad29db87423ad5222b2e07760c4ba14aa4', 'resource': ''}
+
+count = {'key':0}
+with open("hashes.txt") as f:
+  lineList = f.readlines()
+
+for i in lineList:
+  params['resource'] = i
+  response = requests.get(url, params=params)
+  errorDetails = response.json()["scans"]
+  print("HASH: "+i)
+  for i in errorDetails:
+    try:
+      print(i+" Result: "+errorDetails[i]["result"])
+      count[i] = count.get(i, 0)+1
+    except TypeError:
+      print(i+" Result: None")
+  print("\n")
+  time.sleep(16) 
+
+sorted_d = sorted(count.items(), key=operator.itemgetter(1))
+counter = -1;
+main_string = "McAfee"
+checked = True
+
+for i in sorted_d:
+  print(i)
+
+for i in lineList:
+  params['resource'] = i
+  response = requests.get(url, params=params)
+  errorDetails = response.json()["scans"]
+  #errorDetails["McAfee"]["result"] = None;
+  #errorDetails["Qihoo-360"]["result"] = None;
+  #errorDetails["CrowdStrike"]["result"] = None;
+  #errorDetails["Panda"]["result"] = None;
+  #errorDetails["Cybereason"]["result"] = None;
+  #for j in errorDetails:
+  #  errorDetails[j]["result"] = None
+  
+  print("HASH: "+i)
+
+  while checked:
+    if(sorted_d[counter][0] == 'key'):
+      print("No Results")
+      break
+    try:
+      print(main_string+" Result: "+errorDetails[main_string]["result"])
+      checked = False
+    except TypeError:
+      print(main_string + " Result: None")
+      max_value = sorted_d[counter]
+      main_string = max_value[0]
+      counter -= 1;
+    
+  print("\n")
+  time.sleep(16) 
+  checked = True
+  counter = -1;
+  main_string = "McAfee"
+  
+  #try:
+  #  print("PaloAlto Result: "+errorDetails["Paloalto"]["result"])
+  #except TypeError:
+  #  print("PaloAlto Result: None")
+  #  print(max_value[0]+" Result: "+ errorDetails[max_value[0]]["result"])

@@ -1,0 +1,18 @@
+import requests
+import time
+
+url = 'https://www.virustotal.com/vtapi/v2/url/report'
+
+
+params = {'apikey': '5495d7c47aafe9491e06136a47dc2dad29db87423ad5222b2e07760c4ba14aa4', 'resource':''}
+
+with open("sample.txt") as f:
+  lineList = f.readlines()
+
+
+for i in lineList:
+  params['resource'] = i
+  response = requests.get(url, params=params)
+  errorDetails = response.json()["scans"]
+  print(errorDetails["Fortinet"]["result"])
+  time.sleep(16)

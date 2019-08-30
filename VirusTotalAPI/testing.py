@@ -1,0 +1,1 @@
+print("hehhlo".ljust(,w,w,w))
