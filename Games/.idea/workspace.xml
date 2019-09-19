@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fd434d54-9687-4a4c-9df0-8a42ff489cb9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Hangman_GUI.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/widgets_example.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Hangman.py" beforeDir="false" afterPath="$PROJECT_DIR$/Hangman.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Testing_GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing_Tkinter_and_Turtle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hangman_GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Hangman_GUI.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,8 +25,11 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1Q70PlFhMXzasn4fFcAm0zVe9g8" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/Hangman.py" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -159,10 +162,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.Hangman_GUI" />
-        <item itemvalue="Python.testing" />
         <item itemvalue="Python.Testing_PyQt5" />
         <item itemvalue="Python.Hangman" />
         <item itemvalue="Python.widgets_example" />
+        <item itemvalue="Python.testing" />
       </list>
     </recent_temporary>
   </component>
@@ -194,5 +197,8 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

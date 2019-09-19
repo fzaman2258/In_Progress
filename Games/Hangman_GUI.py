@@ -4,12 +4,12 @@ from PyQt5.QtCore import QDateTime, Qt, QTimer
 from functools import partial
 
 
-
 def submit_button_clicked(enter):
     print(enter.text())
     entered_letter = enter.text()
     entered_letter = entered_letter.lower()
     return entered_letter
+
 
 def wrong(letter):
     if letter not in word:
@@ -25,7 +25,6 @@ def print_curr_state(word, letter, letters_remaining, list_letters_remaining):
             letters_remaining -= 1
         index += 1
     return letters_remaining
-
 
 
 list_of_words = ["appliances", "attic",  "backyard",  "barbecue", "baseboard", "basement", "bathroom", "bathtub",
@@ -47,8 +46,8 @@ for i in range(0, len(word)):
 app = QApplication([])
 window = QWidget()
 
-display_string = ''.join(list_letters_remaining)
-current_state = QLabel(display_string)
+display_string = ''.join(list_letters_remaining)  # This prints  ----  and will update as user plays
+current_state = QLabel(display_string)            #
 
 submit_button = QPushButton('Submit')
 enter = QLineEdit('')

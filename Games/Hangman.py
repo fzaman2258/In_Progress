@@ -35,6 +35,7 @@ for i in range(0, len(word)):
     list_letters_remaining.append(" _ ")
 # Start the actual game and print updated visuals depending on flow
 while guesses < 9:
+    print()
     print("".join(list_letters_remaining))
     # Only way to win is to get all the letters
     if letters_remaining == 0:
@@ -42,7 +43,7 @@ while guesses < 9:
         break
     # Update user how many guesses left
     remain = 9-guesses
-    print("You only have ", remain, " guesses remaining!")
+    print("You only have ", remain, " guesses remaining! ","Letters already inputted:a ", letters_input)
 
     # Words are not case-sensitive to lower everything
     letter = input("Enter your letter: ")
@@ -57,11 +58,17 @@ while guesses < 9:
     '''
 
     if letter in letters_input:
+        print()
         print("You have already entered this letter!")
     elif letter.isalpha() is False:
+        print()
         print("You can only enter letters!")
+    elif len(letter)>1 :
+        print()
+        print("Only one letter at a time!")
     elif wrong(letter) is True:
         guesses += 1
+        letters_input.append(letter)
     else:
         letters_remaining = print_curr_state(word, letter, letters_remaining, list_letters_remaining)
         letters_input.append(letter)
