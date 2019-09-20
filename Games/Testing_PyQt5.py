@@ -2,9 +2,13 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QDateTime, Qt, QTimer
 from functools import partial
 
-def ok(a):
-    a.setText("this changed")
-    window.update()
+def ok(count):
+    if count == 1:
+        label2. setText("this changed")
+        window.update()
+    if count == 2:
+        label2. setText("this changed AGAINNNNNNNNNN")
+        window.update()
 
 list_letters_remaining = []
 for i in range(0, 9):
@@ -14,13 +18,17 @@ temp= ''.join(list_letters_remaining)
 app = QApplication([])
 
 label = QLabel(temp)
+global label2
 label2 = QLabel('hahaha')
 
 
 window = QWidget()
 
 button = QPushButton('Submit');
-button.clicked.connect(partial(ok,label))
+count = 1;
+button.clicked.connect(partial(ok,count))
+count = 2;
+button.clicked.connect(partial(ok,count))
 
 button2 =QPushButton("Submit again")
 button2.clicked.connect(partial(ok,label2))
@@ -37,5 +45,15 @@ layout.addWidget(label2)
 
 window.setLayout(layout)
 window.show()
-app.exec_()
 
+
+app.exec()
+
+if won:
+    layout.addWidget(QLabel("GG YOU WON"))
+    window.setLayout(layout)
+    window.update()
+else:
+    layout.addWidget(QLabel('GG YOU LOST'))
+    window.setLayout(layout)
+    window.update()
