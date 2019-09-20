@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QDateTime, Qt, QTimer
+import time
 from functools import partial
 
 def ok(count):
@@ -27,6 +28,7 @@ window = QWidget()
 button = QPushButton('Submit');
 count = 1;
 button.clicked.connect(partial(ok,count))
+time.sleep(15)
 count = 2;
 button.clicked.connect(partial(ok,count))
 
@@ -48,12 +50,3 @@ window.show()
 
 
 app.exec()
-
-if won:
-    layout.addWidget(QLabel("GG YOU WON"))
-    window.setLayout(layout)
-    window.update()
-else:
-    layout.addWidget(QLabel('GG YOU LOST'))
-    window.setLayout(layout)
-    window.update()
